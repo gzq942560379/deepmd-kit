@@ -7,7 +7,7 @@
 	    "sel":		[46, 92],
 	    "rcut_smth":	0.50,
 	    "rcut":		6.00,
-	    "neuron":		[25, 50, 100],
+	    "neuron":		[32, 64, 128],
 	    "resnet_dt":	false,
 	    "axis_neuron":	16,
 	    "seed":		1,
@@ -53,7 +53,7 @@
 	    "numb_btch":	3,
 	    "_comment":		"that's all"
 	},
-	"numb_steps":	1000000,
+	"numb_steps":	100000,
 	"seed":		10,
 	"disp_file":	"lcurve.out",
 	"disp_freq":	100,
@@ -63,4 +63,3 @@
 
     "_comment":		"that's all"
 }
-

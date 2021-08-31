@@ -32,3 +32,5 @@ dp/
 build_lammps/
 build_tests/
 build_cc_tests
+*.pb
+lammps-*
