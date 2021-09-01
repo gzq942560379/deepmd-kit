@@ -3,7 +3,6 @@
 set -ex
 
 source $deepmd_root/script/x86_64/env.sh
-bash $deepmd_root/script/x86_64/build_deepmd.sh
 
 mkdir -p ../model/double
 

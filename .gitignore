@@ -34,3 +34,6 @@ build_tests/
 build_cc_tests
 *.pb
 lammps-*
+model
+training-data
+

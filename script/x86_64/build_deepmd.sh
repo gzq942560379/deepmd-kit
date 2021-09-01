@@ -28,3 +28,8 @@ make install
 
 #------------------
 echo "Congratulations! DeePMD-kit has been installed at ${INSTALL_PREFIX}"
+
+
+cd $deepmd_root
+
+python ./setup.py install -j16

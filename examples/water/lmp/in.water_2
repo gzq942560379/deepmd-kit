@@ -16,7 +16,7 @@ replicate       1 1 2
 # load the plugin at <install_prefix>/lib/libdeepmd_lmp.so
 plugin load     ../../../dp/lib/libdeepmd_lmp.so
 
-pair_style	    deepmd ../model/graph-original.pb
+pair_style	    deepmd ../../../model/water/graph-original.pb
 pair_coeff      * *	
 
 velocity        all create 330.0 23456789

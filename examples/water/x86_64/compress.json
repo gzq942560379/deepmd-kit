@@ -44,10 +44,12 @@
             "rcond": 0.001,
             "atom_ener": []
         },
+        "data_stat_nbatch": 10,
+        "data_stat_protect": 0.01,
         "compress": {
             "type": "se_e2_a",
             "compress": true,
-            "model_file": "../model/double/original/graph-original-baseline.pb",
+            "model_file": "/data/home/guozhuoqiang/deepmd-kit/model/water/double/original/graph-original-baseline.pb",
             "min_nbor_dist": 0.8854385688525511,
             "table_config": [
                 5,
@@ -55,9 +57,7 @@
                 0.1,
                 -1
             ]
-        },
-        "data_stat_nbatch": 10,
-        "data_stat_protect": 0.01
+        }
     },
     "learning_rate": {
         "type": "exp",
@@ -98,7 +98,7 @@
             "auto_prob": "prob_sys_size",
             "sys_probs": null
         },
-        "numb_steps": 1000000,
+        "numb_steps": 100000,
         "seed": 10,
         "disp_file": "lcurve.out",
         "disp_freq": 100,
