@@ -9,8 +9,7 @@ fi
 export tensorflow_root=$HOME/software/tensorflow-gpu-2.4
 export lammps_root=$deepmd_root/lammps-patch_30Jul2021
 
-source $HOME/software/cmake/env.sh
-
+spack load cmake
 spack load openblas
 
 # deeppmd path
@@ -30,7 +29,7 @@ DEEPMD_BUILD_DIR=$deepmd_root/source/build
 
 export DP_VARIANT=cuda
 
-export CUDA_VISIBLE_DEVICES=-1
+export CUDA_VISIBLE_DEVICES=1
 
 # export LD_PRELOAD=/data/home/guozhuoqiang/software/spack-0.16.2/opt/spack/linux-centos7-haswell/gcc-4.8.5/gcc-7.5.0-apfqefcs5zty75lid2nxwyh5f4uagvtp/lib64/libgomp.so.1
 # # gcc

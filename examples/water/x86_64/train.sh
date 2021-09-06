@@ -4,8 +4,10 @@ set -ex
 
 source $deepmd_root/script/x86_64/env.sh
 
-mkdir -p ../model/double
+model_path=$deepmd_root/model/water
+
+mkdir -p $model_path/double
 
 dp train ../se_e2_a/input_double_100000.json
-dp freeze -o ../model/double/graph.pb
-dp test -m ../model/double/graph.pb -s ../data/data_3 -n 1
+dp freeze -o $model_path/double/graph.pb
+dp test -m $model_path/double/graph.pb -s ../data/data_3 -n 1
