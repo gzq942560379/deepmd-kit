@@ -48,7 +48,23 @@ if multiprocessing.get_start_method() != "fork":
 LOCAL_RANK = os.environ.get("LOCAL_RANK")
 LOCAL_RANK = int(0 if LOCAL_RANK is None else LOCAL_RANK)
 
-if os.environ.get("DEVICE") == "cpu" or torch.cuda.is_available() is False:
+if os.environ.get("DEVICE") == "cpu":
+    DEVICE = torch.device("cpu")
+elif os.environ.get("DEVICE") == "npu":
+    # Ascend NPU: transfer_to_npu redirects torch.cuda.* to torch.npu.*, so
+    # the cuda device string below actually lands on npu.
+    try:
+        from torch_npu.contrib import transfer_to_npu  # noqa: F401
+    except ImportError:
+        pass
+    except Exception as err:  # pragma: no cover
+        log.warning(f"transfer_to_npu failed: {err}")
+    # Set device per rank before hccl init (transfer_to_npu redirects
+    # cuda -> npu), otherwise all ranks land on the same physical device.
+    if LOCAL_RANK is not None:
+        torch.cuda.set_device(LOCAL_RANK)
+    DEVICE = torch.device(f"cuda:{LOCAL_RANK}")
+elif torch.cuda.is_available() is False:
     DEVICE = torch.device("cpu")
 else:
     DEVICE = torch.device(f"cuda:{LOCAL_RANK}")

@@ -100,11 +100,16 @@ def nvtx_range(name: str) -> Generator[None, None, None]:
         Range name shown in Nsight Systems/Compute.
     """
     if torch.cuda.is_available():
-        nvtx = torch.cuda.nvtx
-        if hasattr(nvtx, "range"):
-            with nvtx.range(name):
-                yield
-            return
+        try:
+            nvtx = torch.cuda.nvtx
+            if hasattr(nvtx, "range"):
+                with nvtx.range(name):
+                    yield
+                return
+        except RuntimeError:
+            # NVTX not installed (e.g. CPU-only torch build with transfer_to_npu
+            # on Ascend NPU, where cuda.is_available() is True but nvtx is absent)
+            pass
     yield
 
 

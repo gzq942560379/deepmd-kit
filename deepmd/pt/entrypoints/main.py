@@ -452,7 +452,10 @@ def train(
 
     # Initialize DDP
     if os.environ.get("LOCAL_RANK") is not None:
-        dist.init_process_group(backend="cuda:nccl,cpu:gloo")
+        if os.environ.get("DEVICE") == "npu":
+            dist.init_process_group(backend="hccl")
+        else:
+            dist.init_process_group(backend="cuda:nccl,cpu:gloo")
 
     trainer = get_trainer(
         config,

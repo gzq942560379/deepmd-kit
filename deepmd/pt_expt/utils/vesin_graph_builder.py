@@ -69,18 +69,25 @@ def vesin_search_ijs(
     """
     import vesin.torch as _vesin_torch
 
+    # vesin does not support NPU devices; force CPU search when the target
+    # device is NPU. The results are moved back to the original device below.
+    search_device = torch.device("cpu") if device.type == "npu" else device
     box = (
-        cell if periodic else torch.zeros((3, 3), dtype=positions.dtype, device=device)
+        cell if periodic else torch.zeros((3, 3), dtype=positions.dtype, device=search_device)
     )
     nl = _vesin_torch.NeighborList(cutoff=float(rcut), full_list=True)
-    with torch.device(device):
+    with torch.device(search_device):
         ii, jj, ss = nl.compute(
-            points=positions,
-            box=box,
+            points=positions.to(search_device) if device.type == "npu" else positions,
+            box=box.to(search_device) if device.type == "npu" else box,
             periodic=periodic,
             quantities="ijS",
         )
-    return ii.to(torch.int64), jj.to(torch.int64), ss.to(torch.int64).reshape(-1, 3)
+    # Move results back to the original device (e.g. npu) for downstream use.
+    ii = ii.to(torch.int64).to(device)
+    jj = jj.to(torch.int64).to(device)
+    ss = ss.to(torch.int64).reshape(-1, 3).to(device)
+    return ii, jj, ss
 
 
 def build_neighbor_graph_vesin(

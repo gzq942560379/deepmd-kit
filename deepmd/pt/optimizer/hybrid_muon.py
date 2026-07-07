@@ -520,6 +520,9 @@ class _GramNewtonSchulzOrthogonalizer:
             Orthogonalized tensor with the same shape and dtype as ``X``.
         """
         with torch.device(X.device):
+            # Skip torch.compile on NPU: transfer_to_npu + dynamo is incompatible.
+            if X.device.type == "npu":
+                return self._orthogonalize_impl(X)
             return self._compiled_call(X)
 
     def _orthogonalize_impl(self, X: torch.Tensor) -> torch.Tensor:

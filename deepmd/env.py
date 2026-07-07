@@ -40,7 +40,7 @@ if dp_float_prec in ("high", ""):
     global_float_prec = "double"
 elif dp_float_prec == "low":
     GLOBAL_NP_FLOAT_PRECISION = np.float32
-    GLOBAL_ENER_FLOAT_PRECISION = np.float64
+    GLOBAL_ENER_FLOAT_PRECISION = np.float32
     global_float_prec = "float"
 else:
     raise RuntimeError(
